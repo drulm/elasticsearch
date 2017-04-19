@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main16" default="compile.module.main16">
+  <dirname property="module.main16.basedir" file="${ant.file.module_main16}"/>
+  
+  <property name="module.jdk.home.main16" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main16" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main16" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main16" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main16.output.dir" value="${module.main16.basedir}/../../../../../out/production/main16"/>
+  <property name="main16.testoutput.dir" value="${module.main16.basedir}/../../../../../out/test/main16"/>
+  
+  <path id="main16.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main16.module.production.classpath">
+    <path refid="${module.jdk.classpath.main16}"/>
+  </path>
+  
+  <path id="main16.runtime.production.module.classpath">
+    <pathelement location="${main16.output.dir}"/>
+  </path>
+  
+  <path id="main16.module.classpath">
+    <path refid="${module.jdk.classpath.main16}"/>
+    <pathelement location="${main16.output.dir}"/>
+  </path>
+  
+  <path id="main16.runtime.module.classpath">
+    <pathelement location="${main16.testoutput.dir}"/>
+    <pathelement location="${main16.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main16">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main16">
+    <patternset refid="excluded.from.module.main16"/>
+  </patternset>
+  
+  <path id="main16.module.sourcepath">
+    <dirset dir="${module.main16.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main16" depends="compile.module.main16.production,compile.module.main16.tests" description="Compile module main16"/>
+  
+  <target name="compile.module.main16.production" depends="register.custom.compilers" description="Compile module main16; production classes">
+    <mkdir dir="${main16.output.dir}"/>
+    <javac2 destdir="${main16.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main16}/javac">
+      <compilerarg line="${compiler.args.main16}"/>
+      <bootclasspath refid="main16.module.bootclasspath"/>
+      <classpath refid="main16.module.production.classpath"/>
+      <src refid="main16.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main16"/>
+    </javac2>
+    
+    <copy todir="${main16.output.dir}">
+      <fileset dir="${module.main16.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main16.tests" depends="register.custom.compilers,compile.module.main16.production" description="compile module main16; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main16" description="cleanup module">
+    <delete dir="${main16.output.dir}"/>
+    <delete dir="${main16.testoutput.dir}"/>
+  </target>
+</project>

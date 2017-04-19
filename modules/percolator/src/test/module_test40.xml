@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_test40" default="compile.module.test40">
+  <dirname property="module.test40.basedir" file="${ant.file.module_test40}"/>
+  
+  <property name="module.jdk.home.test40" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.test40" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.test40" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.test40" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="test40.output.dir" value="${module.test40.basedir}/../../../../out/production/test40"/>
+  <property name="test40.testoutput.dir" value="${module.test40.basedir}/../../../../out/test/test40"/>
+  
+  <path id="test40.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="test40.module.production.classpath">
+    <path refid="${module.jdk.classpath.test40}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test8.output.dir}"/>
+    <pathelement location="${test42.output.dir}"/>
+    <pathelement location="${main28.output.dir}"/>
+  </path>
+  
+  <path id="test40.runtime.production.module.classpath">
+    <pathelement location="${test40.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="test8.runtime.production.module.classpath"/>
+    <path refid="test42.runtime.production.module.classpath"/>
+    <path refid="main28.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="test40.module.classpath">
+    <path refid="${module.jdk.classpath.test40}"/>
+    <pathelement location="${test40.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test8.testoutput.dir}"/>
+    <pathelement location="${test8.output.dir}"/>
+    <pathelement location="${test42.testoutput.dir}"/>
+    <pathelement location="${test42.output.dir}"/>
+    <pathelement location="${main28.testoutput.dir}"/>
+    <pathelement location="${main28.output.dir}"/>
+  </path>
+  
+  <path id="test40.runtime.module.classpath">
+    <pathelement location="${test40.testoutput.dir}"/>
+    <pathelement location="${test40.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="test8.runtime.module.classpath"/>
+    <path refid="test42.runtime.module.classpath"/>
+    <path refid="main28.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.test40">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.test40">
+    <patternset refid="excluded.from.module.test40"/>
+  </patternset>
+  
+  <path id="test40.module.test.sourcepath">
+    <dirset dir="${module.test40.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.test40" depends="compile.module.test40.production,compile.module.test40.tests" description="Compile module test40"/>
+  
+  <target name="compile.module.test40.production" depends="register.custom.compilers,compile.module.main14,compile.module.test53,compile.module.test8,compile.module.test42,compile.module.main28" description="Compile module test40; production classes"/>
+  
+  <target name="compile.module.test40.tests" depends="register.custom.compilers,compile.module.test40.production" description="compile module test40; test classes" unless="skip.tests">
+    <mkdir dir="${test40.testoutput.dir}"/>
+    <javac2 destdir="${test40.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.test40}/javac">
+      <compilerarg line="${compiler.args.test40}"/>
+      <bootclasspath refid="test40.module.bootclasspath"/>
+      <classpath refid="test40.module.classpath"/>
+      <src refid="test40.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.test40"/>
+    </javac2>
+    
+    <copy todir="${test40.testoutput.dir}">
+      <fileset dir="${module.test40.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.test40" description="cleanup module">
+    <delete dir="${test40.output.dir}"/>
+    <delete dir="${test40.testoutput.dir}"/>
+  </target>
+</project>

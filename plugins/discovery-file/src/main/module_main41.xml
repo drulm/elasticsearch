@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main41" default="compile.module.main41">
+  <dirname property="module.main41.basedir" file="${ant.file.module_main41}"/>
+  
+  <property name="module.jdk.home.main41" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main41" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main41" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main41" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main41.output.dir" value="${module.main41.basedir}/../../../../out/production/main41"/>
+  <property name="main41.testoutput.dir" value="${module.main41.basedir}/../../../../out/test/main41"/>
+  
+  <path id="main41.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main41.module.production.classpath">
+    <path refid="${module.jdk.classpath.main41}"/>
+    <pathelement location="${test35.output.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${main32.output.dir}"/>
+    <pathelement location="${main19.output.dir}"/>
+  </path>
+  
+  <path id="main41.runtime.production.module.classpath">
+    <pathelement location="${main41.output.dir}"/>
+    <path refid="test35.runtime.production.module.classpath"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="main32.runtime.production.module.classpath"/>
+    <path refid="main19.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main41.module.classpath">
+    <path refid="${module.jdk.classpath.main41}"/>
+    <pathelement location="${main41.output.dir}"/>
+    <pathelement location="${test35.testoutput.dir}"/>
+    <pathelement location="${test35.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${main32.testoutput.dir}"/>
+    <pathelement location="${main32.output.dir}"/>
+    <pathelement location="${main19.testoutput.dir}"/>
+    <pathelement location="${main19.output.dir}"/>
+  </path>
+  
+  <path id="main41.runtime.module.classpath">
+    <pathelement location="${main41.testoutput.dir}"/>
+    <pathelement location="${main41.output.dir}"/>
+    <path refid="test35.runtime.module.classpath"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="main32.runtime.module.classpath"/>
+    <path refid="main19.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main41">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main41">
+    <patternset refid="excluded.from.module.main41"/>
+  </patternset>
+  
+  <path id="main41.module.sourcepath">
+    <dirset dir="${module.main41.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main41" depends="compile.module.main41.production,compile.module.main41.tests" description="Compile module main41"/>
+  
+  <target name="compile.module.main41.production" depends="register.custom.compilers,compile.module.test35,compile.module.main14,compile.module.test53,compile.module.main32,compile.module.main19" description="Compile module main41; production classes">
+    <mkdir dir="${main41.output.dir}"/>
+    <javac2 destdir="${main41.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main41}/javac">
+      <compilerarg line="${compiler.args.main41}"/>
+      <bootclasspath refid="main41.module.bootclasspath"/>
+      <classpath refid="main41.module.production.classpath"/>
+      <src refid="main41.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main41"/>
+    </javac2>
+    
+    <copy todir="${main41.output.dir}">
+      <fileset dir="${module.main41.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main41.tests" depends="register.custom.compilers,compile.module.main41.production" description="compile module main41; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main41" description="cleanup module">
+    <delete dir="${main41.output.dir}"/>
+    <delete dir="${main41.testoutput.dir}"/>
+  </target>
+</project>

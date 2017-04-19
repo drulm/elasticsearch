@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_test53" default="compile.module.test53">
+  <dirname property="module.test53.basedir" file="${ant.file.module_test53}"/>
+  
+  <property name="module.jdk.home.test53" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.test53" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.test53" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.test53" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="test53.output.dir" value="${module.test53.basedir}/../../../../out/production/test53"/>
+  <property name="test53.testoutput.dir" value="${module.test53.basedir}/../../../../out/test/test53"/>
+  
+  <path id="test53.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="test53.module.production.classpath">
+    <path refid="${module.jdk.classpath.test53}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test35.output.dir}"/>
+    <pathelement location="${main32.output.dir}"/>
+    <pathelement location="${main19.output.dir}"/>
+    <pathelement location="${test42.output.dir}"/>
+    <pathelement location="${main28.output.dir}"/>
+  </path>
+  
+  <path id="test53.runtime.production.module.classpath">
+    <pathelement location="${test53.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test35.runtime.production.module.classpath"/>
+    <path refid="main32.runtime.production.module.classpath"/>
+    <path refid="main19.runtime.production.module.classpath"/>
+    <path refid="test42.runtime.production.module.classpath"/>
+    <path refid="main28.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="test53.module.classpath">
+    <path refid="${module.jdk.classpath.test53}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test35.testoutput.dir}"/>
+    <pathelement location="${test35.output.dir}"/>
+    <pathelement location="${main32.testoutput.dir}"/>
+    <pathelement location="${main32.output.dir}"/>
+    <pathelement location="${main19.testoutput.dir}"/>
+    <pathelement location="${main19.output.dir}"/>
+    <pathelement location="${test42.testoutput.dir}"/>
+    <pathelement location="${test42.output.dir}"/>
+    <pathelement location="${main28.testoutput.dir}"/>
+    <pathelement location="${main28.output.dir}"/>
+  </path>
+  
+  <path id="test53.runtime.module.classpath">
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test35.runtime.module.classpath"/>
+    <path refid="main32.runtime.module.classpath"/>
+    <path refid="main19.runtime.module.classpath"/>
+    <path refid="test42.runtime.module.classpath"/>
+    <path refid="main28.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main26">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main34">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main35">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main38">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main40">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main42">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main43">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main6">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main8">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.main9">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test10">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test12">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test14">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test17">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test19">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test22">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test29">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test34">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test36">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test37">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test38">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test47">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test51">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test52">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test53">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  <patternset id="excluded.from.module.test7">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.test53">
+    <patternset refid="excluded.from.module.main26"/>
+    <patternset refid="excluded.from.module.main34"/>
+    <patternset refid="excluded.from.module.main35"/>
+    <patternset refid="excluded.from.module.main38"/>
+    <patternset refid="excluded.from.module.main40"/>
+    <patternset refid="excluded.from.module.main42"/>
+    <patternset refid="excluded.from.module.main43"/>
+    <patternset refid="excluded.from.module.main6"/>
+    <patternset refid="excluded.from.module.main8"/>
+    <patternset refid="excluded.from.module.main9"/>
+    <patternset refid="excluded.from.module.test"/>
+    <patternset refid="excluded.from.module.test10"/>
+    <patternset refid="excluded.from.module.test12"/>
+    <patternset refid="excluded.from.module.test14"/>
+    <patternset refid="excluded.from.module.test17"/>
+    <patternset refid="excluded.from.module.test19"/>
+    <patternset refid="excluded.from.module.test22"/>
+    <patternset refid="excluded.from.module.test29"/>
+    <patternset refid="excluded.from.module.test34"/>
+    <patternset refid="excluded.from.module.test36"/>
+    <patternset refid="excluded.from.module.test37"/>
+    <patternset refid="excluded.from.module.test38"/>
+    <patternset refid="excluded.from.module.test47"/>
+    <patternset refid="excluded.from.module.test51"/>
+    <patternset refid="excluded.from.module.test52"/>
+    <patternset refid="excluded.from.module.test53"/>
+    <patternset refid="excluded.from.module.test7"/>
+  </patternset>
+  
+  <path id="test53.module.sourcepath">
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-smartcn/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-phonetic/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-stempel/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../client/rest-high-level/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-icu/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../modules/transport-netty4/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-kuromoji/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../test/framework/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../modules/aggs-matrix-stats/src/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-ukrainian/src/main">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  <path id="test53.module.test.sourcepath">
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-ukrainian/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../deb/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../rpm/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../tar/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-phonetic/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../integ-test-zip/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../qa/evil-tests/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../modules/transport-netty4/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-smartcn/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../qa/smoke-test-http/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../test/framework/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../core/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-kuromoji/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-icu/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../plugins/analysis-stempel/src/test">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.test53.basedir}/../../../../client/rest-high-level/src/test">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.test53" depends="compile.module.test53.production,compile.module.test53.tests" description="Compile modules test53"/>
+  
+  <target name="compile.module.test53.production" depends="register.custom.compilers,compile.module.main14,compile.module.test42,compile.module.main28,compile.module.test35,compile.module.main32,compile.module.main19" description="Compile modules test53; production classes">
+    <mkdir dir="${test53.output.dir}"/>
+    <javac2 destdir="${test53.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.test53}/javac">
+      <compilerarg line="${compiler.args.test53}"/>
+      <bootclasspath refid="test53.module.bootclasspath"/>
+      <classpath refid="test53.module.production.classpath"/>
+      <src refid="test53.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.test53"/>
+    </javac2>
+    
+    <copy todir="${test53.output.dir}">
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-smartcn/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-phonetic/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-stempel/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../client/rest-high-level/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-icu/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../modules/transport-netty4/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-kuromoji/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../test/framework/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../modules/aggs-matrix-stats/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-ukrainian/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.test53.tests" depends="register.custom.compilers,compile.module.test53.production" description="compile modules test53; test classes" unless="skip.tests">
+    <mkdir dir="${test53.testoutput.dir}"/>
+    <javac2 destdir="${test53.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.test53}/javac">
+      <compilerarg line="${compiler.args.test53}"/>
+      <bootclasspath refid="test53.module.bootclasspath"/>
+      <classpath refid="test53.module.classpath"/>
+      <src refid="test53.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.test53"/>
+    </javac2>
+    
+    <copy todir="${test53.testoutput.dir}">
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-ukrainian/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../deb/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../rpm/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../tar/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-phonetic/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../integ-test-zip/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../qa/evil-tests/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../modules/transport-netty4/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-smartcn/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../qa/smoke-test-http/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../test/framework/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../core/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-kuromoji/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-icu/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../plugins/analysis-stempel/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.test53.basedir}/../../../../client/rest-high-level/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.test53" description="cleanup module">
+    <delete dir="${test53.output.dir}"/>
+    <delete dir="${test53.testoutput.dir}"/>
+  </target>
+</project>

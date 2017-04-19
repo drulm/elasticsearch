@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main27" default="compile.module.main27">
+  <dirname property="module.main27.basedir" file="${ant.file.module_main27}"/>
+  
+  <property name="module.jdk.home.main27" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main27" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main27" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main27" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main27.output.dir" value="${module.main27.basedir}/../../../../../out/production/main27"/>
+  <property name="main27.testoutput.dir" value="${module.main27.basedir}/../../../../../out/test/main27"/>
+  
+  <path id="main27.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main27.module.production.classpath">
+    <path refid="${module.jdk.classpath.main27}"/>
+  </path>
+  
+  <path id="main27.runtime.production.module.classpath">
+    <pathelement location="${main27.output.dir}"/>
+  </path>
+  
+  <path id="main27.module.classpath">
+    <path refid="${module.jdk.classpath.main27}"/>
+    <pathelement location="${main27.output.dir}"/>
+  </path>
+  
+  <path id="main27.runtime.module.classpath">
+    <pathelement location="${main27.testoutput.dir}"/>
+    <pathelement location="${main27.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main27">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main27">
+    <patternset refid="excluded.from.module.main27"/>
+  </patternset>
+  
+  <path id="main27.module.sourcepath">
+    <dirset dir="${module.main27.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main27" depends="compile.module.main27.production,compile.module.main27.tests" description="Compile module main27"/>
+  
+  <target name="compile.module.main27.production" depends="register.custom.compilers" description="Compile module main27; production classes">
+    <mkdir dir="${main27.output.dir}"/>
+    <javac2 destdir="${main27.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main27}/javac">
+      <compilerarg line="${compiler.args.main27}"/>
+      <bootclasspath refid="main27.module.bootclasspath"/>
+      <classpath refid="main27.module.production.classpath"/>
+      <src refid="main27.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main27"/>
+    </javac2>
+    
+    <copy todir="${main27.output.dir}">
+      <fileset dir="${module.main27.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main27.tests" depends="register.custom.compilers,compile.module.main27.production" description="compile module main27; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main27" description="cleanup module">
+    <delete dir="${main27.output.dir}"/>
+    <delete dir="${main27.testoutput.dir}"/>
+  </target>
+</project>

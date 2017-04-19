@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main19" default="compile.module.main19">
+  <dirname property="module.main19.basedir" file="${ant.file.module_main19}"/>
+  
+  <property name="module.jdk.home.main19" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main19" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main19" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main19" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main19.output.dir" value="${module.main19.basedir}/../../../../out/production/main19"/>
+  <property name="main19.testoutput.dir" value="${module.main19.basedir}/../../../../out/test/main19"/>
+  
+  <path id="main19.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main19.module.production.classpath">
+    <path refid="${module.jdk.classpath.main19}"/>
+  </path>
+  
+  <path id="main19.runtime.production.module.classpath">
+    <pathelement location="${main19.output.dir}"/>
+  </path>
+  
+  <path id="main19.module.classpath">
+    <path refid="${module.jdk.classpath.main19}"/>
+    <pathelement location="${main19.output.dir}"/>
+  </path>
+  
+  <path id="main19.runtime.module.classpath">
+    <pathelement location="${main19.testoutput.dir}"/>
+    <pathelement location="${main19.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main19">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main19">
+    <patternset refid="excluded.from.module.main19"/>
+  </patternset>
+  
+  <path id="main19.module.sourcepath">
+    <dirset dir="${module.main19.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main19" depends="compile.module.main19.production,compile.module.main19.tests" description="Compile module main19"/>
+  
+  <target name="compile.module.main19.production" depends="register.custom.compilers" description="Compile module main19; production classes">
+    <mkdir dir="${main19.output.dir}"/>
+    <javac2 destdir="${main19.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main19}/javac">
+      <compilerarg line="${compiler.args.main19}"/>
+      <bootclasspath refid="main19.module.bootclasspath"/>
+      <classpath refid="main19.module.production.classpath"/>
+      <src refid="main19.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main19"/>
+    </javac2>
+    
+    <copy todir="${main19.output.dir}">
+      <fileset dir="${module.main19.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main19.tests" depends="register.custom.compilers,compile.module.main19.production" description="compile module main19; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main19" description="cleanup module">
+    <delete dir="${main19.output.dir}"/>
+    <delete dir="${main19.testoutput.dir}"/>
+  </target>
+</project>

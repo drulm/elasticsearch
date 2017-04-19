@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_config" default="compile.module.config">
+  <dirname property="module.config.basedir" file="${ant.file.module_config}"/>
+  
+  <property name="module.jdk.home.config" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.config" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.config" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.config" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="config.output.dir" value="${module.config.basedir}/../../../../../../../../out/production/config"/>
+  <property name="config.testoutput.dir" value="${module.config.basedir}/../../../../../../../../out/test/config"/>
+  
+  <path id="config.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="config.module.production.classpath">
+    <path refid="${module.jdk.classpath.config}"/>
+  </path>
+  
+  <path id="config.runtime.production.module.classpath">
+    <pathelement location="${config.output.dir}"/>
+  </path>
+  
+  <path id="config.module.classpath">
+    <path refid="${module.jdk.classpath.config}"/>
+    <pathelement location="${config.output.dir}"/>
+  </path>
+  
+  <path id="config.runtime.module.classpath">
+    <pathelement location="${config.testoutput.dir}"/>
+    <pathelement location="${config.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.config">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.config">
+    <patternset refid="excluded.from.module.config"/>
+  </patternset>
+  
+  <path id="config.module.sourcepath">
+    <dirset dir="${module.config.basedir}">
+      <include name="scripts"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.config" depends="compile.module.config.production,compile.module.config.tests" description="Compile module config"/>
+  
+  <target name="compile.module.config.production" depends="register.custom.compilers" description="Compile module config; production classes">
+    <mkdir dir="${config.output.dir}"/>
+    <javac2 destdir="${config.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.config}/javac">
+      <compilerarg line="${compiler.args.config}"/>
+      <bootclasspath refid="config.module.bootclasspath"/>
+      <classpath refid="config.module.production.classpath"/>
+      <src refid="config.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.config"/>
+    </javac2>
+    
+    <copy todir="${config.output.dir}">
+      <fileset dir="${module.config.basedir}/scripts">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.config.tests" depends="register.custom.compilers,compile.module.config.production" description="compile module config; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.config" description="cleanup module">
+    <delete dir="${config.output.dir}"/>
+    <delete dir="${config.testoutput.dir}"/>
+  </target>
+</project>

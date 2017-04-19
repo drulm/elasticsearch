@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main31" default="compile.module.main31">
+  <dirname property="module.main31.basedir" file="${ant.file.module_main31}"/>
+  
+  <property name="module.jdk.home.main31" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main31" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main31" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main31" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main31.output.dir" value="${module.main31.basedir}/../../../../out/production/main31"/>
+  <property name="main31.testoutput.dir" value="${module.main31.basedir}/../../../../out/test/main31"/>
+  
+  <path id="main31.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main31.module.production.classpath">
+    <path refid="${module.jdk.classpath.main31}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+  </path>
+  
+  <path id="main31.runtime.production.module.classpath">
+    <pathelement location="${main31.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main31.module.classpath">
+    <path refid="${module.jdk.classpath.main31}"/>
+    <pathelement location="${main31.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+  </path>
+  
+  <path id="main31.runtime.module.classpath">
+    <pathelement location="${main31.testoutput.dir}"/>
+    <pathelement location="${main31.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main31">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main31">
+    <patternset refid="excluded.from.module.main31"/>
+  </patternset>
+  
+  <path id="main31.module.sourcepath">
+    <dirset dir="${module.main31.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main31" depends="compile.module.main31.production,compile.module.main31.tests" description="Compile module main31"/>
+  
+  <target name="compile.module.main31.production" depends="register.custom.compilers,compile.module.main14,compile.module.test53" description="Compile module main31; production classes">
+    <mkdir dir="${main31.output.dir}"/>
+    <javac2 destdir="${main31.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main31}/javac">
+      <compilerarg line="${compiler.args.main31}"/>
+      <bootclasspath refid="main31.module.bootclasspath"/>
+      <classpath refid="main31.module.production.classpath"/>
+      <src refid="main31.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main31"/>
+    </javac2>
+    
+    <copy todir="${main31.output.dir}">
+      <fileset dir="${module.main31.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main31.tests" depends="register.custom.compilers,compile.module.main31.production" description="compile module main31; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main31" description="cleanup module">
+    <delete dir="${main31.output.dir}"/>
+    <delete dir="${main31.testoutput.dir}"/>
+  </target>
+</project>

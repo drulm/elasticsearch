@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main2" default="compile.module.main2">
+  <dirname property="module.main2.basedir" file="${ant.file.module_main2}"/>
+  
+  <property name="module.jdk.home.main2" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main2" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main2" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main2" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main2.output.dir" value="${module.main2.basedir}/../../../../out/production/main2"/>
+  <property name="main2.testoutput.dir" value="${module.main2.basedir}/../../../../out/test/main2"/>
+  
+  <path id="main2.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main2.module.production.classpath">
+    <path refid="${module.jdk.classpath.main2}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test8.output.dir}"/>
+    <pathelement location="${test24.output.dir}"/>
+  </path>
+  
+  <path id="main2.runtime.production.module.classpath">
+    <pathelement location="${main2.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="test8.runtime.production.module.classpath"/>
+    <path refid="test24.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main2.module.classpath">
+    <path refid="${module.jdk.classpath.main2}"/>
+    <pathelement location="${main2.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test8.testoutput.dir}"/>
+    <pathelement location="${test8.output.dir}"/>
+    <pathelement location="${test24.testoutput.dir}"/>
+    <pathelement location="${test24.output.dir}"/>
+  </path>
+  
+  <path id="main2.runtime.module.classpath">
+    <pathelement location="${main2.testoutput.dir}"/>
+    <pathelement location="${main2.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="test8.runtime.module.classpath"/>
+    <path refid="test24.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main2">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main2">
+    <patternset refid="excluded.from.module.main2"/>
+  </patternset>
+  
+  <path id="main2.module.sourcepath">
+    <dirset dir="${module.main2.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main2" depends="compile.module.main2.production,compile.module.main2.tests" description="Compile module main2"/>
+  
+  <target name="compile.module.main2.production" depends="register.custom.compilers,compile.module.main14,compile.module.test53,compile.module.test8,compile.module.test24" description="Compile module main2; production classes">
+    <mkdir dir="${main2.output.dir}"/>
+    <javac2 destdir="${main2.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main2}/javac">
+      <compilerarg line="${compiler.args.main2}"/>
+      <bootclasspath refid="main2.module.bootclasspath"/>
+      <classpath refid="main2.module.production.classpath"/>
+      <src refid="main2.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main2"/>
+    </javac2>
+    
+    <copy todir="${main2.output.dir}">
+      <fileset dir="${module.main2.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main2.tests" depends="register.custom.compilers,compile.module.main2.production" description="compile module main2; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main2" description="cleanup module">
+    <delete dir="${main2.output.dir}"/>
+    <delete dir="${main2.testoutput.dir}"/>
+  </target>
+</project>

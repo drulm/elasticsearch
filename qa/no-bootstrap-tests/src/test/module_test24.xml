@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_test24" default="compile.module.test24">
+  <dirname property="module.test24.basedir" file="${ant.file.module_test24}"/>
+  
+  <property name="module.jdk.home.test24" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.test24" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.test24" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.test24" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="test24.output.dir" value="${module.test24.basedir}/../../../../out/production/test24"/>
+  <property name="test24.testoutput.dir" value="${module.test24.basedir}/../../../../out/test/test24"/>
+  
+  <path id="test24.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="test24.module.production.classpath">
+    <path refid="${module.jdk.classpath.test24}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+  </path>
+  
+  <path id="test24.runtime.production.module.classpath">
+    <pathelement location="${test24.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="test24.module.classpath">
+    <path refid="${module.jdk.classpath.test24}"/>
+    <pathelement location="${test24.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+  </path>
+  
+  <path id="test24.runtime.module.classpath">
+    <pathelement location="${test24.testoutput.dir}"/>
+    <pathelement location="${test24.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.test24">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.test24">
+    <patternset refid="excluded.from.module.test24"/>
+  </patternset>
+  
+  <path id="test24.module.test.sourcepath">
+    <dirset dir="${module.test24.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.test24" depends="compile.module.test24.production,compile.module.test24.tests" description="Compile module test24"/>
+  
+  <target name="compile.module.test24.production" depends="register.custom.compilers,compile.module.main14,compile.module.test53" description="Compile module test24; production classes"/>
+  
+  <target name="compile.module.test24.tests" depends="register.custom.compilers,compile.module.test24.production" description="compile module test24; test classes" unless="skip.tests">
+    <mkdir dir="${test24.testoutput.dir}"/>
+    <javac2 destdir="${test24.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.test24}/javac">
+      <compilerarg line="${compiler.args.test24}"/>
+      <bootclasspath refid="test24.module.bootclasspath"/>
+      <classpath refid="test24.module.classpath"/>
+      <src refid="test24.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.test24"/>
+    </javac2>
+    
+    <copy todir="${test24.testoutput.dir}">
+      <fileset dir="${module.test24.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.test24" description="cleanup module">
+    <delete dir="${test24.output.dir}"/>
+    <delete dir="${test24.testoutput.dir}"/>
+  </target>
+</project>

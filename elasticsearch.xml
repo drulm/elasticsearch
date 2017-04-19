@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="elasticsearch" default="all">
+  
+  
+  <property file="elasticsearch.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.zip"/>
+    <include name="*.ear"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  <import file="${basedir}/core/src/test/resources/org/elasticsearch/script/config/module_config.xml"/>
+  
+  <import file="${basedir}/core/src/main/module_main14.xml"/>
+  
+  <import file="${basedir}/test/fixtures/hdfs-fixture/src/main/module_main16.xml"/>
+  
+  <import file="${basedir}/client/test/src/main/module_main19.xml"/>
+  
+  <import file="${basedir}/distribution/tools/java-version-checker/src/main/module_main27.xml"/>
+  
+  <import file="${basedir}/buildSrc/src/main/module_main28.xml"/>
+  
+  <import file="${basedir}/client/rest/src/main/module_main32.xml"/>
+  
+  <import file="${basedir}/test/fixtures/example-fixture/src/main/module_main4.xml"/>
+  
+  <import file="${basedir}/test/logger-usage/src/main/module_main44.xml"/>
+  
+  <import file="${basedir}/client/rest/src/test/module_test35.xml"/>
+  
+  <import file="${basedir}/buildSrc/src/test/module_test42.xml"/>
+  
+  <import file="${basedir}/distribution/zip/src/test/module_test53.xml"/>
+  
+  <import file="${basedir}/modules/lang-mustache/src/main/module_main.xml"/>
+  
+  <import file="${basedir}/plugins/mapper-size/src/main/module_main1.xml"/>
+  
+  <import file="${basedir}/plugins/discovery-ec2/src/main/module_main11.xml"/>
+  
+  <import file="${basedir}/client/sniffer/src/main/module_main12.xml"/>
+  
+  <import file="${basedir}/plugins/discovery-gce/src/main/module_main13.xml"/>
+  
+  <import file="${basedir}/plugins/repository-s3/src/main/module_main15.xml"/>
+  
+  <import file="${basedir}/benchmarks/src/main/module_main17.xml"/>
+  
+  <import file="${basedir}/plugins/store-smb/src/main/module_main21.xml"/>
+  
+  <import file="${basedir}/plugins/mapper-murmur3/src/main/module_main22.xml"/>
+  
+  <import file="${basedir}/modules/repository-url/src/main/module_main24.xml"/>
+  
+  <import file="${basedir}/client/client-benchmark-noop-api-plugin/src/main/module_main25.xml"/>
+  
+  <import file="${basedir}/plugins/discovery-azure-classic/src/main/module_main29.xml"/>
+  
+  <import file="${basedir}/plugins/repository-hdfs/src/main/module_main3.xml"/>
+  
+  <import file="${basedir}/modules/lang-expression/src/main/module_main31.xml"/>
+  
+  <import file="${basedir}/plugins/jvm-example/src/main/module_main33.xml"/>
+  
+  <import file="${basedir}/plugins/repository-gcs/src/main/module_main36.xml"/>
+  
+  <import file="${basedir}/modules/percolator/src/main/module_main37.xml"/>
+  
+  <import file="${basedir}/plugins/repository-azure/src/main/module_main39.xml"/>
+  
+  <import file="${basedir}/plugins/discovery-file/src/main/module_main41.xml"/>
+  
+  <import file="${basedir}/modules/reindex/src/main/module_main5.xml"/>
+  
+  <import file="${basedir}/plugins/discovery-file/src/test/module_test1.xml"/>
+  
+  <import file="${basedir}/plugins/repository-hdfs/src/test/module_test11.xml"/>
+  
+  <import file="${basedir}/modules/aggs-matrix-stats/src/test/module_test2.xml"/>
+  
+  <import file="${basedir}/qa/multi-cluster-search/src/test/module_test20.xml"/>
+  
+  <import file="${basedir}/plugins/discovery-ec2/src/test/module_test21.xml"/>
+  
+  <import file="${basedir}/qa/smoke-test-tribe-node/src/test/module_test23.xml"/>
+  
+  <import file="${basedir}/qa/no-bootstrap-tests/src/test/module_test24.xml"/>
+  
+  <import file="${basedir}/plugins/repository-s3/src/test/module_test25.xml"/>
+  
+  <import file="${basedir}/qa/smoke-test-reindex-with-painless/src/test/module_test3.xml"/>
+  
+  <import file="${basedir}/plugins/repository-gcs/src/test/module_test30.xml"/>
+  
+  <import file="${basedir}/qa/rolling-upgrade/src/test/module_test31.xml"/>
+  
+  <import file="${basedir}/client/sniffer/src/test/module_test32.xml"/>
+  
+  <import file="${basedir}/plugins/mapper-murmur3/src/test/module_test4.xml"/>
+  
+  <import file="${basedir}/docs/src/test/module_test41.xml"/>
+  
+  <import file="${basedir}/qa/smoke-test-plugins/src/test/module_test44.xml"/>
+  
+  <import file="${basedir}/test/logger-usage/src/test/module_test49.xml"/>
+  
+  <import file="${basedir}/qa/smoke-test-ingest-disabled/src/test/module_test5.xml"/>
+  
+  <import file="${basedir}/plugins/jvm-example/src/test/module_test50.xml"/>
+  
+  <import file="${basedir}/qa/backwards-5.0/src/test/module_test54.xml"/>
+  
+  <import file="${basedir}/modules/lang-expression/src/test/module_test55.xml"/>
+  
+  <import file="${basedir}/modules/lang-mustache/src/test/module_test56.xml"/>
+  
+  <import file="${basedir}/qa/smoke-test-multinode/src/test/module_test6.xml"/>
+  
+  <import file="${basedir}/modules/lang-painless/src/main/module_main20.xml"/>
+  
+  <import file="${basedir}/plugins/mapper-size/src/test/module_test16.xml"/>
+  
+  <import file="${basedir}/plugins/discovery-gce/src/test/module_test28.xml"/>
+  
+  <import file="${basedir}/plugins/repository-azure/src/test/module_test39.xml"/>
+  
+  <import file="${basedir}/plugins/discovery-azure-classic/src/test/module_test43.xml"/>
+  
+  <import file="${basedir}/modules/repository-url/src/test/module_test46.xml"/>
+  
+  <import file="${basedir}/qa/smoke-test-ingest-with-all-dependencies/src/test/module_test8.xml"/>
+  
+  <import file="${basedir}/plugins/store-smb/src/test/module_test9.xml"/>
+  
+  <import file="${basedir}/plugins/ingest-geoip/src/main/module_main18.xml"/>
+  
+  <import file="${basedir}/plugins/ingest-attachment/src/main/module_main2.xml"/>
+  
+  <import file="${basedir}/modules/ingest-common/src/main/module_main23.xml"/>
+  
+  <import file="${basedir}/plugins/ingest-user-agent/src/main/module_main30.xml"/>
+  
+  <import file="${basedir}/modules/reindex/src/test/module_test15.xml"/>
+  
+  <import file="${basedir}/modules/lang-painless/src/test/module_test18.xml"/>
+  
+  <import file="${basedir}/plugins/ingest-geoip/src/test/module_test26.xml"/>
+  
+  <import file="${basedir}/plugins/ingest-user-agent/src/test/module_test27.xml"/>
+  
+  <import file="${basedir}/modules/percolator/src/test/module_test40.xml"/>
+  
+  <import file="${basedir}/plugins/ingest-attachment/src/test/module_test45.xml"/>
+  
+  <import file="${basedir}/modules/ingest-common/src/test/module_test48.xml"/>
+  
+  <import file="${basedir}/client/transport/src/main/module_main7.xml"/>
+  
+  <import file="${basedir}/client/transport/src/test/module_test13.xml"/>
+  
+  <import file="${basedir}/client/benchmark/src/main/module_main10.xml"/>
+  
+  <import file="${basedir}/qa/smoke-test-client/src/test/module_test33.xml"/>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.config, clean.module.main14, clean.module.main16, clean.module.main19, clean.module.main27, clean.module.main28, clean.module.main32, clean.module.main4, clean.module.main44, clean.module.test35, clean.module.test42, clean.module.test53, clean.module.main, clean.module.main1, clean.module.main11, clean.module.main12, clean.module.main13, clean.module.main15, clean.module.main17, clean.module.main21, clean.module.main22, clean.module.main24, clean.module.main25, clean.module.main29, clean.module.main3, clean.module.main31, clean.module.main33, clean.module.main36, clean.module.main37, clean.module.main39, clean.module.main41, clean.module.main5, clean.module.test1, clean.module.test11, clean.module.test2, clean.module.test20, clean.module.test21, clean.module.test23, clean.module.test24, clean.module.test25, clean.module.test3, clean.module.test30, clean.module.test31, clean.module.test32, clean.module.test4, clean.module.test41, clean.module.test44, clean.module.test49, clean.module.test5, clean.module.test50, clean.module.test54, clean.module.test55, clean.module.test56, clean.module.test6, clean.module.main20, clean.module.test16, clean.module.test28, clean.module.test39, clean.module.test43, clean.module.test46, clean.module.test8, clean.module.test9, clean.module.main18, clean.module.main2, clean.module.main23, clean.module.main30, clean.module.test15, clean.module.test18, clean.module.test26, clean.module.test27, clean.module.test40, clean.module.test45, clean.module.test48, clean.module.main7, clean.module.test13, clean.module.main10, clean.module.test33" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.config, compile.module.main14, compile.module.main16, compile.module.main19, compile.module.main27, compile.module.main28, compile.module.main32, compile.module.main4, compile.module.main44, compile.module.test35, compile.module.test42, compile.module.test53, compile.module.main, compile.module.main1, compile.module.main11, compile.module.main12, compile.module.main13, compile.module.main15, compile.module.main17, compile.module.main21, compile.module.main22, compile.module.main24, compile.module.main25, compile.module.main29, compile.module.main3, compile.module.main31, compile.module.main33, compile.module.main36, compile.module.main37, compile.module.main39, compile.module.main41, compile.module.main5, compile.module.test1, compile.module.test11, compile.module.test2, compile.module.test20, compile.module.test21, compile.module.test23, compile.module.test24, compile.module.test25, compile.module.test3, compile.module.test30, compile.module.test31, compile.module.test32, compile.module.test4, compile.module.test41, compile.module.test44, compile.module.test49, compile.module.test5, compile.module.test50, compile.module.test54, compile.module.test55, compile.module.test56, compile.module.test6, compile.module.main20, compile.module.test16, compile.module.test28, compile.module.test39, compile.module.test43, compile.module.test46, compile.module.test8, compile.module.test9, compile.module.main18, compile.module.main2, compile.module.main23, compile.module.main30, compile.module.test15, compile.module.test18, compile.module.test26, compile.module.test27, compile.module.test40, compile.module.test45, compile.module.test48, compile.module.main7, compile.module.test13, compile.module.main10, compile.module.test33" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>

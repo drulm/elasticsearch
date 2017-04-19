@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main4" default="compile.module.main4">
+  <dirname property="module.main4.basedir" file="${ant.file.module_main4}"/>
+  
+  <property name="module.jdk.home.main4" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main4" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main4" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main4" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main4.output.dir" value="${module.main4.basedir}/../../../../../out/production/main4"/>
+  <property name="main4.testoutput.dir" value="${module.main4.basedir}/../../../../../out/test/main4"/>
+  
+  <path id="main4.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main4.module.production.classpath">
+    <path refid="${module.jdk.classpath.main4}"/>
+  </path>
+  
+  <path id="main4.runtime.production.module.classpath">
+    <pathelement location="${main4.output.dir}"/>
+  </path>
+  
+  <path id="main4.module.classpath">
+    <path refid="${module.jdk.classpath.main4}"/>
+    <pathelement location="${main4.output.dir}"/>
+  </path>
+  
+  <path id="main4.runtime.module.classpath">
+    <pathelement location="${main4.testoutput.dir}"/>
+    <pathelement location="${main4.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main4">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main4">
+    <patternset refid="excluded.from.module.main4"/>
+  </patternset>
+  
+  <path id="main4.module.sourcepath">
+    <dirset dir="${module.main4.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main4" depends="compile.module.main4.production,compile.module.main4.tests" description="Compile module main4"/>
+  
+  <target name="compile.module.main4.production" depends="register.custom.compilers" description="Compile module main4; production classes">
+    <mkdir dir="${main4.output.dir}"/>
+    <javac2 destdir="${main4.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main4}/javac">
+      <compilerarg line="${compiler.args.main4}"/>
+      <bootclasspath refid="main4.module.bootclasspath"/>
+      <classpath refid="main4.module.production.classpath"/>
+      <src refid="main4.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main4"/>
+    </javac2>
+    
+    <copy todir="${main4.output.dir}">
+      <fileset dir="${module.main4.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main4.tests" depends="register.custom.compilers,compile.module.main4.production" description="compile module main4; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main4" description="cleanup module">
+    <delete dir="${main4.output.dir}"/>
+    <delete dir="${main4.testoutput.dir}"/>
+  </target>
+</project>

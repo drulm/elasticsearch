@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main18" default="compile.module.main18">
+  <dirname property="module.main18.basedir" file="${ant.file.module_main18}"/>
+  
+  <property name="module.jdk.home.main18" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main18" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main18" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main18" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main18.output.dir" value="${module.main18.basedir}/../../../../out/production/main18"/>
+  <property name="main18.testoutput.dir" value="${module.main18.basedir}/../../../../out/test/main18"/>
+  
+  <path id="main18.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main18.module.production.classpath">
+    <path refid="${module.jdk.classpath.main18}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test8.output.dir}"/>
+  </path>
+  
+  <path id="main18.runtime.production.module.classpath">
+    <pathelement location="${main18.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="test8.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main18.module.classpath">
+    <path refid="${module.jdk.classpath.main18}"/>
+    <pathelement location="${main18.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test8.testoutput.dir}"/>
+    <pathelement location="${test8.output.dir}"/>
+  </path>
+  
+  <path id="main18.runtime.module.classpath">
+    <pathelement location="${main18.testoutput.dir}"/>
+    <pathelement location="${main18.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="test8.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main18">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main18">
+    <patternset refid="excluded.from.module.main18"/>
+  </patternset>
+  
+  <path id="main18.module.sourcepath">
+    <dirset dir="${module.main18.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main18" depends="compile.module.main18.production,compile.module.main18.tests" description="Compile module main18"/>
+  
+  <target name="compile.module.main18.production" depends="register.custom.compilers,compile.module.main14,compile.module.test53,compile.module.test8" description="Compile module main18; production classes">
+    <mkdir dir="${main18.output.dir}"/>
+    <javac2 destdir="${main18.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main18}/javac">
+      <compilerarg line="${compiler.args.main18}"/>
+      <bootclasspath refid="main18.module.bootclasspath"/>
+      <classpath refid="main18.module.production.classpath"/>
+      <src refid="main18.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main18"/>
+    </javac2>
+    
+    <copy todir="${main18.output.dir}">
+      <fileset dir="${module.main18.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main18.tests" depends="register.custom.compilers,compile.module.main18.production" description="compile module main18; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main18" description="cleanup module">
+    <delete dir="${main18.output.dir}"/>
+    <delete dir="${main18.testoutput.dir}"/>
+  </target>
+</project>

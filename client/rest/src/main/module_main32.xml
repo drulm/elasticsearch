@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main32" default="compile.module.main32">
+  <dirname property="module.main32.basedir" file="${ant.file.module_main32}"/>
+  
+  <property name="module.jdk.home.main32" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main32" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main32" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main32" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main32.output.dir" value="${module.main32.basedir}/../../../../out/production/main32"/>
+  <property name="main32.testoutput.dir" value="${module.main32.basedir}/../../../../out/test/main32"/>
+  
+  <path id="main32.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main32.module.production.classpath">
+    <path refid="${module.jdk.classpath.main32}"/>
+  </path>
+  
+  <path id="main32.runtime.production.module.classpath">
+    <pathelement location="${main32.output.dir}"/>
+  </path>
+  
+  <path id="main32.module.classpath">
+    <path refid="${module.jdk.classpath.main32}"/>
+    <pathelement location="${main32.output.dir}"/>
+  </path>
+  
+  <path id="main32.runtime.module.classpath">
+    <pathelement location="${main32.testoutput.dir}"/>
+    <pathelement location="${main32.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main32">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main32">
+    <patternset refid="excluded.from.module.main32"/>
+  </patternset>
+  
+  <path id="main32.module.sourcepath">
+    <dirset dir="${module.main32.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main32" depends="compile.module.main32.production,compile.module.main32.tests" description="Compile module main32"/>
+  
+  <target name="compile.module.main32.production" depends="register.custom.compilers" description="Compile module main32; production classes">
+    <mkdir dir="${main32.output.dir}"/>
+    <javac2 destdir="${main32.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main32}/javac">
+      <compilerarg line="${compiler.args.main32}"/>
+      <bootclasspath refid="main32.module.bootclasspath"/>
+      <classpath refid="main32.module.production.classpath"/>
+      <src refid="main32.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main32"/>
+    </javac2>
+    
+    <copy todir="${main32.output.dir}">
+      <fileset dir="${module.main32.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main32.tests" depends="register.custom.compilers,compile.module.main32.production" description="compile module main32; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main32" description="cleanup module">
+    <delete dir="${main32.output.dir}"/>
+    <delete dir="${main32.testoutput.dir}"/>
+  </target>
+</project>

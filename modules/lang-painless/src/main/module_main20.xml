@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main20" default="compile.module.main20">
+  <dirname property="module.main20.basedir" file="${ant.file.module_main20}"/>
+  
+  <property name="module.jdk.home.main20" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main20" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main20" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main20" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main20.output.dir" value="${module.main20.basedir}/../../../../out/production/main20"/>
+  <property name="main20.testoutput.dir" value="${module.main20.basedir}/../../../../out/test/main20"/>
+  
+  <path id="main20.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main20.module.production.classpath">
+    <path refid="${module.jdk.classpath.main20}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test24.output.dir}"/>
+  </path>
+  
+  <path id="main20.runtime.production.module.classpath">
+    <pathelement location="${main20.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="test24.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main20.module.classpath">
+    <path refid="${module.jdk.classpath.main20}"/>
+    <pathelement location="${main20.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test24.testoutput.dir}"/>
+    <pathelement location="${test24.output.dir}"/>
+  </path>
+  
+  <path id="main20.runtime.module.classpath">
+    <pathelement location="${main20.testoutput.dir}"/>
+    <pathelement location="${main20.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="test24.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main20">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main20">
+    <patternset refid="excluded.from.module.main20"/>
+  </patternset>
+  
+  <path id="main20.module.sourcepath">
+    <dirset dir="${module.main20.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main20" depends="compile.module.main20.production,compile.module.main20.tests" description="Compile module main20"/>
+  
+  <target name="compile.module.main20.production" depends="register.custom.compilers,compile.module.main14,compile.module.test53,compile.module.test24" description="Compile module main20; production classes">
+    <mkdir dir="${main20.output.dir}"/>
+    <javac2 destdir="${main20.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main20}/javac">
+      <compilerarg line="${compiler.args.main20}"/>
+      <bootclasspath refid="main20.module.bootclasspath"/>
+      <classpath refid="main20.module.production.classpath"/>
+      <src refid="main20.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main20"/>
+    </javac2>
+    
+    <copy todir="${main20.output.dir}">
+      <fileset dir="${module.main20.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main20.tests" depends="register.custom.compilers,compile.module.main20.production" description="compile module main20; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main20" description="cleanup module">
+    <delete dir="${main20.output.dir}"/>
+    <delete dir="${main20.testoutput.dir}"/>
+  </target>
+</project>

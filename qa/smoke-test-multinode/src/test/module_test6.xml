@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_test6" default="compile.module.test6">
+  <dirname property="module.test6.basedir" file="${ant.file.module_test6}"/>
+  
+  <property name="module.jdk.home.test6" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.test6" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.test6" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.test6" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="test6.output.dir" value="${module.test6.basedir}/../../../../out/production/test6"/>
+  <property name="test6.testoutput.dir" value="${module.test6.basedir}/../../../../out/test/test6"/>
+  
+  <path id="test6.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="test6.module.production.classpath">
+    <path refid="${module.jdk.classpath.test6}"/>
+    <pathelement location="${test53.output.dir}"/>
+  </path>
+  
+  <path id="test6.runtime.production.module.classpath">
+    <pathelement location="${test6.output.dir}"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="test6.module.classpath">
+    <path refid="${module.jdk.classpath.test6}"/>
+    <pathelement location="${test6.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+  </path>
+  
+  <path id="test6.runtime.module.classpath">
+    <pathelement location="${test6.testoutput.dir}"/>
+    <pathelement location="${test6.output.dir}"/>
+    <path refid="test53.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.test6">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.test6">
+    <patternset refid="excluded.from.module.test6"/>
+  </patternset>
+  
+  <path id="test6.module.test.sourcepath">
+    <dirset dir="${module.test6.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.test6" depends="compile.module.test6.production,compile.module.test6.tests" description="Compile module test6"/>
+  
+  <target name="compile.module.test6.production" depends="register.custom.compilers,compile.module.test53" description="Compile module test6; production classes"/>
+  
+  <target name="compile.module.test6.tests" depends="register.custom.compilers,compile.module.test6.production" description="compile module test6; test classes" unless="skip.tests">
+    <mkdir dir="${test6.testoutput.dir}"/>
+    <javac2 destdir="${test6.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.test6}/javac">
+      <compilerarg line="${compiler.args.test6}"/>
+      <bootclasspath refid="test6.module.bootclasspath"/>
+      <classpath refid="test6.module.classpath"/>
+      <src refid="test6.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.test6"/>
+    </javac2>
+    
+    <copy todir="${test6.testoutput.dir}">
+      <fileset dir="${module.test6.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.test6" description="cleanup module">
+    <delete dir="${test6.output.dir}"/>
+    <delete dir="${test6.testoutput.dir}"/>
+  </target>
+</project>

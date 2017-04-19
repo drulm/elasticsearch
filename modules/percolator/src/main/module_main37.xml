@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main37" default="compile.module.main37">
+  <dirname property="module.main37.basedir" file="${ant.file.module_main37}"/>
+  
+  <property name="module.jdk.home.main37" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main37" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main37" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main37" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main37.output.dir" value="${module.main37.basedir}/../../../../out/production/main37"/>
+  <property name="main37.testoutput.dir" value="${module.main37.basedir}/../../../../out/test/main37"/>
+  
+  <path id="main37.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main37.module.production.classpath">
+    <path refid="${module.jdk.classpath.main37}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+  </path>
+  
+  <path id="main37.runtime.production.module.classpath">
+    <pathelement location="${main37.output.dir}"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main37.module.classpath">
+    <path refid="${module.jdk.classpath.main37}"/>
+    <pathelement location="${main37.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+  </path>
+  
+  <path id="main37.runtime.module.classpath">
+    <pathelement location="${main37.testoutput.dir}"/>
+    <pathelement location="${main37.output.dir}"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="main14.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main37">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main37">
+    <patternset refid="excluded.from.module.main37"/>
+  </patternset>
+  
+  <path id="main37.module.sourcepath">
+    <dirset dir="${module.main37.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main37" depends="compile.module.main37.production,compile.module.main37.tests" description="Compile module main37"/>
+  
+  <target name="compile.module.main37.production" depends="register.custom.compilers,compile.module.test53,compile.module.main14" description="Compile module main37; production classes">
+    <mkdir dir="${main37.output.dir}"/>
+    <javac2 destdir="${main37.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main37}/javac">
+      <compilerarg line="${compiler.args.main37}"/>
+      <bootclasspath refid="main37.module.bootclasspath"/>
+      <classpath refid="main37.module.production.classpath"/>
+      <src refid="main37.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main37"/>
+    </javac2>
+    
+    <copy todir="${main37.output.dir}">
+      <fileset dir="${module.main37.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main37.tests" depends="register.custom.compilers,compile.module.main37.production" description="compile module main37; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main37" description="cleanup module">
+    <delete dir="${main37.output.dir}"/>
+    <delete dir="${main37.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_test2" default="compile.module.test2">
+  <dirname property="module.test2.basedir" file="${ant.file.module_test2}"/>
+  
+  <property name="module.jdk.home.test2" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.test2" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.test2" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.test2" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="test2.output.dir" value="${module.test2.basedir}/../../../../out/production/test2"/>
+  <property name="test2.testoutput.dir" value="${module.test2.basedir}/../../../../out/test/test2"/>
+  
+  <path id="test2.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="test2.module.production.classpath">
+    <path refid="${module.jdk.classpath.test2}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test42.output.dir}"/>
+    <pathelement location="${main28.output.dir}"/>
+  </path>
+  
+  <path id="test2.runtime.production.module.classpath">
+    <pathelement location="${test2.output.dir}"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="test42.runtime.production.module.classpath"/>
+    <path refid="main28.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="test2.module.classpath">
+    <path refid="${module.jdk.classpath.test2}"/>
+    <pathelement location="${test2.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test42.testoutput.dir}"/>
+    <pathelement location="${test42.output.dir}"/>
+    <pathelement location="${main28.testoutput.dir}"/>
+    <pathelement location="${main28.output.dir}"/>
+  </path>
+  
+  <path id="test2.runtime.module.classpath">
+    <pathelement location="${test2.testoutput.dir}"/>
+    <pathelement location="${test2.output.dir}"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="test42.runtime.module.classpath"/>
+    <path refid="main28.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.test2">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.test2">
+    <patternset refid="excluded.from.module.test2"/>
+  </patternset>
+  
+  <path id="test2.module.test.sourcepath">
+    <dirset dir="${module.test2.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.test2" depends="compile.module.test2.production,compile.module.test2.tests" description="Compile module test2"/>
+  
+  <target name="compile.module.test2.production" depends="register.custom.compilers,compile.module.test53,compile.module.test42,compile.module.main28" description="Compile module test2; production classes"/>
+  
+  <target name="compile.module.test2.tests" depends="register.custom.compilers,compile.module.test2.production" description="compile module test2; test classes" unless="skip.tests">
+    <mkdir dir="${test2.testoutput.dir}"/>
+    <javac2 destdir="${test2.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.test2}/javac">
+      <compilerarg line="${compiler.args.test2}"/>
+      <bootclasspath refid="test2.module.bootclasspath"/>
+      <classpath refid="test2.module.classpath"/>
+      <src refid="test2.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.test2"/>
+    </javac2>
+    
+    <copy todir="${test2.testoutput.dir}">
+      <fileset dir="${module.test2.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.test2" description="cleanup module">
+    <delete dir="${test2.output.dir}"/>
+    <delete dir="${test2.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main44" default="compile.module.main44">
+  <dirname property="module.main44.basedir" file="${ant.file.module_main44}"/>
+  
+  <property name="module.jdk.home.main44" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main44" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main44" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main44" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main44.output.dir" value="${module.main44.basedir}/../../../../out/production/main44"/>
+  <property name="main44.testoutput.dir" value="${module.main44.basedir}/../../../../out/test/main44"/>
+  
+  <path id="main44.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main44.module.production.classpath">
+    <path refid="${module.jdk.classpath.main44}"/>
+  </path>
+  
+  <path id="main44.runtime.production.module.classpath">
+    <pathelement location="${main44.output.dir}"/>
+  </path>
+  
+  <path id="main44.module.classpath">
+    <path refid="${module.jdk.classpath.main44}"/>
+    <pathelement location="${main44.output.dir}"/>
+  </path>
+  
+  <path id="main44.runtime.module.classpath">
+    <pathelement location="${main44.testoutput.dir}"/>
+    <pathelement location="${main44.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main44">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main44">
+    <patternset refid="excluded.from.module.main44"/>
+  </patternset>
+  
+  <path id="main44.module.sourcepath">
+    <dirset dir="${module.main44.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main44" depends="compile.module.main44.production,compile.module.main44.tests" description="Compile module main44"/>
+  
+  <target name="compile.module.main44.production" depends="register.custom.compilers" description="Compile module main44; production classes">
+    <mkdir dir="${main44.output.dir}"/>
+    <javac2 destdir="${main44.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main44}/javac">
+      <compilerarg line="${compiler.args.main44}"/>
+      <bootclasspath refid="main44.module.bootclasspath"/>
+      <classpath refid="main44.module.production.classpath"/>
+      <src refid="main44.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main44"/>
+    </javac2>
+    
+    <copy todir="${main44.output.dir}">
+      <fileset dir="${module.main44.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main44.tests" depends="register.custom.compilers,compile.module.main44.production" description="compile module main44; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main44" description="cleanup module">
+    <delete dir="${main44.output.dir}"/>
+    <delete dir="${main44.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main33" default="compile.module.main33">
+  <dirname property="module.main33.basedir" file="${ant.file.module_main33}"/>
+  
+  <property name="module.jdk.home.main33" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main33" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main33" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main33" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main33.output.dir" value="${module.main33.basedir}/../../../../out/production/main33"/>
+  <property name="main33.testoutput.dir" value="${module.main33.basedir}/../../../../out/test/main33"/>
+  
+  <path id="main33.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main33.module.production.classpath">
+    <path refid="${module.jdk.classpath.main33}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+  </path>
+  
+  <path id="main33.runtime.production.module.classpath">
+    <pathelement location="${main33.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main33.module.classpath">
+    <path refid="${module.jdk.classpath.main33}"/>
+    <pathelement location="${main33.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+  </path>
+  
+  <path id="main33.runtime.module.classpath">
+    <pathelement location="${main33.testoutput.dir}"/>
+    <pathelement location="${main33.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main33">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main33">
+    <patternset refid="excluded.from.module.main33"/>
+  </patternset>
+  
+  <path id="main33.module.sourcepath">
+    <dirset dir="${module.main33.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main33" depends="compile.module.main33.production,compile.module.main33.tests" description="Compile module main33"/>
+  
+  <target name="compile.module.main33.production" depends="register.custom.compilers,compile.module.main14,compile.module.test53" description="Compile module main33; production classes">
+    <mkdir dir="${main33.output.dir}"/>
+    <javac2 destdir="${main33.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main33}/javac">
+      <compilerarg line="${compiler.args.main33}"/>
+      <bootclasspath refid="main33.module.bootclasspath"/>
+      <classpath refid="main33.module.production.classpath"/>
+      <src refid="main33.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main33"/>
+    </javac2>
+    
+    <copy todir="${main33.output.dir}">
+      <fileset dir="${module.main33.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main33.tests" depends="register.custom.compilers,compile.module.main33.production" description="compile module main33; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main33" description="cleanup module">
+    <delete dir="${main33.output.dir}"/>
+    <delete dir="${main33.testoutput.dir}"/>
+  </target>
+</project>

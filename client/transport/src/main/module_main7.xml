@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main7" default="compile.module.main7">
+  <dirname property="module.main7.basedir" file="${ant.file.module_main7}"/>
+  
+  <property name="module.jdk.home.main7" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main7" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main7" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main7" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main7.output.dir" value="${module.main7.basedir}/../../../../out/production/main7"/>
+  <property name="main7.testoutput.dir" value="${module.main7.basedir}/../../../../out/test/main7"/>
+  
+  <path id="main7.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main7.module.production.classpath">
+    <path refid="${module.jdk.classpath.main7}"/>
+    <pathelement location="${test40.output.dir}"/>
+    <pathelement location="${main5.output.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test56.output.dir}"/>
+    <pathelement location="${main.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${main37.output.dir}"/>
+    <pathelement location="${test15.output.dir}"/>
+  </path>
+  
+  <path id="main7.runtime.production.module.classpath">
+    <pathelement location="${main7.output.dir}"/>
+    <path refid="test40.runtime.production.module.classpath"/>
+    <path refid="main5.runtime.production.module.classpath"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test56.runtime.production.module.classpath"/>
+    <path refid="main.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="main37.runtime.production.module.classpath"/>
+    <path refid="test15.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main7.module.classpath">
+    <path refid="${module.jdk.classpath.main7}"/>
+    <pathelement location="${main7.output.dir}"/>
+    <pathelement location="${test40.testoutput.dir}"/>
+    <pathelement location="${test40.output.dir}"/>
+    <pathelement location="${main5.testoutput.dir}"/>
+    <pathelement location="${main5.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test56.testoutput.dir}"/>
+    <pathelement location="${test56.output.dir}"/>
+    <pathelement location="${main.testoutput.dir}"/>
+    <pathelement location="${main.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${main37.testoutput.dir}"/>
+    <pathelement location="${main37.output.dir}"/>
+    <pathelement location="${test15.testoutput.dir}"/>
+    <pathelement location="${test15.output.dir}"/>
+  </path>
+  
+  <path id="main7.runtime.module.classpath">
+    <pathelement location="${main7.testoutput.dir}"/>
+    <pathelement location="${main7.output.dir}"/>
+    <path refid="test40.runtime.module.classpath"/>
+    <path refid="main5.runtime.module.classpath"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test56.runtime.module.classpath"/>
+    <path refid="main.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="main37.runtime.module.classpath"/>
+    <path refid="test15.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main7">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main7">
+    <patternset refid="excluded.from.module.main7"/>
+  </patternset>
+  
+  <path id="main7.module.sourcepath">
+    <dirset dir="${module.main7.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main7" depends="compile.module.main7.production,compile.module.main7.tests" description="Compile module main7"/>
+  
+  <target name="compile.module.main7.production" depends="register.custom.compilers,compile.module.test40,compile.module.main5,compile.module.main14,compile.module.test56,compile.module.main,compile.module.test53,compile.module.main37,compile.module.test15" description="Compile module main7; production classes">
+    <mkdir dir="${main7.output.dir}"/>
+    <javac2 destdir="${main7.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main7}/javac">
+      <compilerarg line="${compiler.args.main7}"/>
+      <bootclasspath refid="main7.module.bootclasspath"/>
+      <classpath refid="main7.module.production.classpath"/>
+      <src refid="main7.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main7"/>
+    </javac2>
+    
+    <copy todir="${main7.output.dir}">
+      <fileset dir="${module.main7.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main7.tests" depends="register.custom.compilers,compile.module.main7.production" description="compile module main7; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main7" description="cleanup module">
+    <delete dir="${main7.output.dir}"/>
+    <delete dir="${main7.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_main23" default="compile.module.main23">
+  <dirname property="module.main23.basedir" file="${ant.file.module_main23}"/>
+  
+  <property name="module.jdk.home.main23" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main23" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main23" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main23" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main23.output.dir" value="${module.main23.basedir}/../../../../out/production/main23"/>
+  <property name="main23.testoutput.dir" value="${module.main23.basedir}/../../../../out/test/main23"/>
+  
+  <path id="main23.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main23.module.production.classpath">
+    <path refid="${module.jdk.classpath.main23}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test8.output.dir}"/>
+  </path>
+  
+  <path id="main23.runtime.production.module.classpath">
+    <pathelement location="${main23.output.dir}"/>
+    <path refid="main14.runtime.production.module.classpath"/>
+    <path refid="test53.runtime.production.module.classpath"/>
+    <path refid="test8.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="main23.module.classpath">
+    <path refid="${module.jdk.classpath.main23}"/>
+    <pathelement location="${main23.output.dir}"/>
+    <pathelement location="${main14.testoutput.dir}"/>
+    <pathelement location="${main14.output.dir}"/>
+    <pathelement location="${test53.testoutput.dir}"/>
+    <pathelement location="${test53.output.dir}"/>
+    <pathelement location="${test8.testoutput.dir}"/>
+    <pathelement location="${test8.output.dir}"/>
+  </path>
+  
+  <path id="main23.runtime.module.classpath">
+    <pathelement location="${main23.testoutput.dir}"/>
+    <pathelement location="${main23.output.dir}"/>
+    <path refid="main14.runtime.module.classpath"/>
+    <path refid="test53.runtime.module.classpath"/>
+    <path refid="test8.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main23">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main23">
+    <patternset refid="excluded.from.module.main23"/>
+  </patternset>
+  
+  <path id="main23.module.sourcepath">
+    <dirset dir="${module.main23.basedir}">
+      <include name="java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main23" depends="compile.module.main23.production,compile.module.main23.tests" description="Compile module main23"/>
+  
+  <target name="compile.module.main23.production" depends="register.custom.compilers,compile.module.main14,compile.module.test53,compile.module.test8" description="Compile module main23; production classes">
+    <mkdir dir="${main23.output.dir}"/>
+    <javac2 destdir="${main23.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main23}/javac">
+      <compilerarg line="${compiler.args.main23}"/>
+      <bootclasspath refid="main23.module.bootclasspath"/>
+      <classpath refid="main23.module.production.classpath"/>
+      <src refid="main23.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main23"/>
+    </javac2>
+    
+    <copy todir="${main23.output.dir}">
+      <fileset dir="${module.main23.basedir}/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main23.tests" depends="register.custom.compilers,compile.module.main23.production" description="compile module main23; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main23" description="cleanup module">
+    <delete dir="${main23.output.dir}"/>
+    <delete dir="${main23.testoutput.dir}"/>
+  </target>
+</project>
