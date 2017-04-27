@@ -29,6 +29,7 @@ import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 import com.carrotsearch.randomizedtesting.rules.TestRuleAdapter;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +38,6 @@ import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.status.StatusConsoleListener;
 import org.apache.logging.log4j.status.StatusData;
 import org.apache.logging.log4j.status.StatusLogger;
-import org.apache.lucene.uninverting.UninvertingReader;
 import org.apache.lucene.util.LuceneTestCase;
 import org.apache.lucene.util.LuceneTestCase.SuppressCodecs;
 import org.apache.lucene.util.TestRuleMarkFailure;
@@ -91,8 +91,10 @@ import org.elasticsearch.indices.analysis.AnalysisModule;
 import org.elasticsearch.plugins.AnalysisPlugin;
 import org.elasticsearch.plugins.MapperPlugin;
 import org.elasticsearch.script.MockScriptEngine;
+import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptModule;
 import org.elasticsearch.script.ScriptService;
+import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.MockSearchService;
 import org.elasticsearch.test.junit.listeners.LoggingListener;
 import org.elasticsearch.test.junit.listeners.ReproduceInfoPrinter;
@@ -134,6 +136,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static org.elasticsearch.common.util.CollectionUtils.arrayAsArrayList;
 import static org.hamcrest.Matchers.empty;
@@ -328,6 +331,7 @@ public abstract class ESTestCase extends LuceneTestCase {
         }
         try {
             final List<String> actualWarnings = threadContext.getResponseHeaders().get("Warning");
+            assertNotNull(actualWarnings);
             final Set<String> actualWarningValues =
                     actualWarnings.stream().map(DeprecationLogger::extractWarningValueFromWarningHeader).collect(Collectors.toSet());
             for (String msg : expectedWarnings) {
@@ -387,9 +391,6 @@ public abstract class ESTestCase extends LuceneTestCase {
     protected static void checkStaticState() throws Exception {
         MockPageCacheRecycler.ensureAllPagesAreReleased();
         MockBigArrays.ensureAllArraysAreReleased();
-        // field cache should NEVER get loaded.
-        String[] entries = UninvertingReader.getUninvertedStats();
-        assertEquals("fieldcache must never be used, got=" + Arrays.toString(entries), 0, entries.length);
 
         // ensure no one changed the status logger level on us
         assertThat(StatusLogger.getLogger().getLevel(), equalTo(Level.WARN));
@@ -1084,6 +1085,14 @@ public abstract class ESTestCase extends LuceneTestCase {
      */
     protected NamedXContentRegistry xContentRegistry() {
         return new NamedXContentRegistry(ClusterModule.getNamedXWriteables());
+    }
+
+    /**
+     * Create a "mock" script for use either with {@link MockScriptEngine} or anywhere where you need a script but don't really care about
+     * its contents.
+     */
+    public static final Script mockScript(String id) {
+        return new Script(ScriptType.INLINE, MockScriptEngine.NAME, id, emptyMap());
     }
 
     /** Returns the suite failure marker: internal use only! */
