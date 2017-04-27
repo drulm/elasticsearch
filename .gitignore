@@ -50,3 +50,4 @@ html_docs
 eclipse-build
 
 /bin/
+/nbproject/private/
